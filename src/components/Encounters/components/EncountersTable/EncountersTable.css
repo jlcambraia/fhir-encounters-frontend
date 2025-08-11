@@ -124,3 +124,34 @@
 	background-color: #475569;
 	color: var(--color-muted);
 }
+
+@media (max-width: 700px) {
+	.table {
+		display: block;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+
+	.table .table__th,
+	.table td {
+		padding: 1rem 0.75rem;
+		font-size: 0.8rem;
+	}
+
+	.table__cell_id {
+		min-width: 60px;
+	}
+
+	.table__cell_patient,
+	.table__cell_practitioner {
+		width: auto;
+	}
+}
+
+@media (max-width: 400px) {
+	.table .table__th,
+	.table td {
+		font-size: 0.75rem;
+		padding: 0.8rem 0.5rem;
+	}
+}
