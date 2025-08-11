@@ -1,0 +1,126 @@
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+	color: var(--color-text);
+	table-layout: fixed;
+}
+
+.table .table__thead {
+	background-color: #f0f9ff;
+	color: #475569;
+	font-weight: var(--font-semibold);
+}
+
+[data-theme='dark'] .table .table__thead {
+	background-color: #334155;
+	color: var(--color-muted);
+}
+
+.table .table__th,
+.table td {
+	padding: 1rem 1rem;
+	border-bottom: 1px solid var(--color-border);
+	text-align: left;
+	vertical-align: middle;
+	overflow-wrap: break-word;
+}
+
+.table__row_skeleton {
+	height: 4rem;
+}
+
+.table__row_skeleton .table__cell {
+	padding: 0.75rem 1rem;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.table__link {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+.table__link:hover,
+.table__link:focus {
+	text-decoration: underline;
+}
+
+.table__row:hover {
+	background-color: #f1f5f9;
+	cursor: pointer;
+}
+
+[data-theme='dark'] .table__row:hover {
+	background-color: #475569;
+}
+
+.table__cell {
+	box-sizing: border-box;
+}
+
+.table__cell_id {
+	width: 10%;
+	min-width: 80px;
+	white-space: nowrap;
+}
+
+.table__cell_patient {
+	font-weight: var(--font-semibold);
+	width: 30%;
+}
+
+.table__cell_practitioner {
+	font-weight: var(--font-semibold);
+	width: 30%;
+}
+
+.status {
+	display: inline-block;
+	padding: 0.25rem 0.6rem;
+	font-weight: var(--font-semibold);
+	font-size: 0.75rem;
+	border-radius: 12px;
+	white-space: nowrap;
+	user-select: none;
+}
+
+.status--finished {
+	background-color: #dcfce7;
+	color: var(--color-success);
+}
+
+.status--planned {
+	background-color: #fef3c7;
+	color: var(--color-warning);
+}
+
+.status--in-progress {
+	background-color: #fee2e2;
+	color: var(--color-error);
+}
+
+.status--unknown {
+	background-color: #e2e8f0;
+	color: var(--color-muted);
+}
+
+[data-theme='dark'] .status--completed {
+	background-color: #166534;
+	color: var(--color-success);
+}
+
+[data-theme='dark'] .status--scheduled {
+	background-color: #a16207;
+	color: var(--color-warning);
+}
+
+[data-theme='dark'] .status--inprogress {
+	background-color: #b91c1c;
+	color: var(--color-error);
+}
+
+[data-theme='dark'] .status--unknown {
+	background-color: #475569;
+	color: var(--color-muted);
+}
