@@ -101,17 +101,19 @@ const Filters = () => {
 					</select>
 				</div>
 
-				<button type='reset' className='filters__btn filters__btn_clear'>
-					{translate('clear')}
-				</button>
+				<div className='filters__btns'>
+					<button type='reset' className='filters__btn filters__btn_clear'>
+						{translate('clear')}
+					</button>
 
-				<button
-					type='button'
-					className='filters__btn filters__btn_save'
-					onClick={handleSaveView}
-				>
-					{translate('saveView')}
-				</button>
+					<button
+						type='button'
+						className='filters__btn filters__btn_save'
+						onClick={handleSaveView}
+					>
+						{translate('saveView')}
+					</button>
+				</div>
 			</form>
 
 			<SaveViewModal
