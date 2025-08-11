@@ -72,6 +72,12 @@
 	min-width: 180px;
 }
 
+.filters__btns {
+	margin-top: auto;
+	display: flex;
+	gap: 0.5em;
+}
+
 .filters__btn {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
@@ -84,7 +90,6 @@
 }
 
 .filters__btn_clear {
-	margin-top: auto;
 	background-color: #e5e7eb;
 	color: #475569;
 }
@@ -94,10 +99,62 @@
 }
 
 .filters__btn_save {
-	margin-top: auto;
 	background-color: var(--color-success);
 }
 
 .filters__btn_save:hover {
 	background-color: #166534;
+}
+
+/* Responsividade para telas até 600px */
+@media (max-width: 600px) {
+	.filters__form {
+		flex-direction: column;
+		align-items: stretch; /* para inputs e selects ocuparem a largura disponível */
+		gap: 1rem;
+	}
+
+	.filters__field {
+		width: 100%; /* campo ocupa toda largura */
+	}
+
+	.filters__input,
+	.filters__select,
+	.filters__input_date {
+		min-width: auto; /* remover o mínimo fixo para ajustar na largura disponível */
+		width: 100%;
+	}
+
+	.filters__btns {
+		height: 2.5em;
+	}
+
+	.filters__btn {
+		width: 100%;
+		margin-top: 0; /* para eliminar possíveis espaçamentos estranhos */
+	}
+
+	.filters__btn_clear,
+	.filters__btn_save {
+		margin-top: 0;
+	}
+}
+
+/* Ajuste extra para telas muito pequenas, até 350px */
+@media (max-width: 350px) {
+	.filters__title {
+		font-size: 1rem;
+	}
+
+	.filters__input,
+	.filters__select,
+	.filters__input_date {
+		font-size: 0.8rem;
+		padding: 0.3rem 0.6rem;
+	}
+
+	.filters__btn {
+		font-size: 0.85rem;
+		padding: 0.4rem 0.7rem;
+	}
 }
