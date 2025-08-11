@@ -60,3 +60,30 @@
 	border-color: var(--color-primary);
 	cursor: default;
 }
+
+@media (max-width: 600px) {
+	.pagination__controls {
+		gap: 0rem;
+	}
+}
+
+@media (max-width: 550px) {
+	.pagination {
+		flex-direction: column;
+		gap: 0.5rem;
+		min-width: 0rem;
+	}
+
+	.pagination__select {
+		margin-left: 0.3rem;
+		padding: 0.2rem 0.3rem;
+	}
+
+	.pagination__controls {
+		gap: 0rem;
+	}
+
+	.pagination__btn {
+		min-width: 1rem;
+	}
+}
