@@ -8,3 +8,9 @@
 .theme-toggle__icon {
 	width: 1.35em;
 }
+
+@media (max-width: 600px) {
+	.theme-toggle__icon {
+		width: 1.1em;
+	}
+}
