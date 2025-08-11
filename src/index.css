@@ -1,0 +1,64 @@
+@import url(./vendor/normalize.css);
+
+@import url(./vendor/fonts.css);
+
+:root {
+	--font-normal: 400;
+	--font-medium: 500;
+	--font-semibold: 600;
+	--font-bold: 700;
+
+	--color-bg: #f8fafc;
+	--color-title: #000;
+	--color-text: #1f2937;
+	--color-primary: #2563eb;
+	--color-primary-dark: #1e40af;
+	--color-success: #15803d;
+	--color-warning: #b45309;
+	--color-error: #b91c1c;
+	--color-muted: #64748b;
+	--color-border: #cbd5e1;
+	--color-white: #fff;
+	--color-shadow: rgba(0, 0, 0, 0.05);
+	--color-overlay: rgba(0, 0, 0, 0.6);
+	--color-modal-bg: #fff;
+	--color-modal-warning-bg: #eff6ff;
+
+	--skeleton-base: #e2e8f0;
+	--skeleton-highlight: #cbd5e1;
+}
+
+[data-theme='dark'] {
+	--color-bg: #0f172a;
+	--color-title: #fff;
+	--color-text: #e0e7ff;
+	--color-primary: #6366f1;
+	--color-primary-dark: #4338ca;
+	--color-success: #22c55e;
+	--color-warning: #facc15;
+	--color-error: #ef4444;
+	--color-muted: #94a3b8;
+	--color-border: #334155;
+	--color-white: #1e293b;
+	--color-shadow: rgba(0, 0, 0, 0.3);
+	--color-overlay: rgba(0, 0, 0, 0.8);
+	--color-modal-bg: #1e293b;
+
+	--skeleton-base: #334155;
+	--skeleton-highlight: #475569;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
