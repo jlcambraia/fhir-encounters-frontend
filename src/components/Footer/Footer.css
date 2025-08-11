@@ -1,0 +1,25 @@
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 4rem;
+}
+
+.footer__copyrights {
+	color: var(--color-text);
+	font-weight: var(--font-medium);
+	font-size: 0.9rem;
+}
+
+.footer__icons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.footer__icon {
+	cursor: pointer;
+	width: 1.2rem;
+}
