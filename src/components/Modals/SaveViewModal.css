@@ -21,7 +21,7 @@
 	position: relative;
 	background: var(--color-modal-bg);
 	border-radius: 1rem;
-	max-width: 24rem; /* igual ao ErrorModal */
+	max-width: 24rem;
 	width: 100%;
 	animation: slideIn 0.3s ease-out;
 	padding: 2rem;
@@ -94,22 +94,6 @@
 .save-view-modal__input:focus {
 	border-color: var(--color-primary);
 	box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
-}
-
-.save-view-modal__input_error {
-	border-color: var(--color-danger);
-}
-
-.save-view-modal__input_error:focus {
-	border-color: var(--color-danger);
-	box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), 0.1);
-}
-
-.save-view-modal__error {
-	font-size: 0.75rem;
-	color: var(--color-danger);
-	margin-top: 0.25rem;
-	margin-bottom: 1rem;
 }
 
 /* Botões alinhados à direita, com espaçamento igual ao ErrorModal */
