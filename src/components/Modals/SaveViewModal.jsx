@@ -5,12 +5,10 @@ import './SaveViewModal.css';
 const SaveViewModal = ({ isOpen, onClose, onSave }) => {
 	const { translate } = useTranslations();
 	const [viewName, setViewName] = useState('');
-	const [error, setError] = useState('');
 
 	useEffect(() => {
 		if (isOpen) {
 			setViewName('');
-			setError('');
 		}
 	}, [isOpen]);
 
@@ -27,25 +25,13 @@ const SaveViewModal = ({ isOpen, onClose, onSave }) => {
 
 	const handleClose = () => {
 		setViewName('');
-		setError('');
 		onClose();
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const trimmedName = viewName.trim();
-		if (!trimmedName) {
-			setError(translate('errorViewNameRequired'));
-			return;
-		}
-
-		if (trimmedName.length < 2) {
-			setError(translate('errorViewNameTooShort'));
-			return;
-		}
-
-		onSave(trimmedName);
+		onSave(viewName.trim());
 		handleClose();
 	};
 
@@ -57,7 +43,6 @@ const SaveViewModal = ({ isOpen, onClose, onSave }) => {
 
 	const handleInputChange = (e) => {
 		setViewName(e.target.value);
-		if (error) setError(true);
 	};
 
 	if (!isOpen) return null;
@@ -85,16 +70,13 @@ const SaveViewModal = ({ isOpen, onClose, onSave }) => {
 				<form onSubmit={handleSubmit} className='save-view-modal__form'>
 					<input
 						type='text'
-						className={`save-view-modal__input ${
-							error ? 'save-view-modal__input_error' : ''
-						}`}
+						className='save-view-modal__input'
 						value={viewName}
 						onChange={handleInputChange}
 						placeholder={translate('enterViewName')}
 						autoFocus
-						maxLength={50}
+						maxLength={30}
 					/>
-					{error && <span className='save-view-modal__error'>{error}</span>}
 
 					<div className='save-view-modal__actions'>
 						<button
