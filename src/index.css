@@ -23,6 +23,8 @@
 	--color-overlay: rgba(0, 0, 0, 0.6);
 	--color-modal-bg: #fff;
 	--color-modal-warning-bg: #eff6ff;
+	--color-modal-warning-border: #bfdbfe;
+	--color-modal-warning-text: #1d4ed8;
 
 	--skeleton-base: #e2e8f0;
 	--skeleton-highlight: #cbd5e1;
@@ -43,6 +45,9 @@
 	--color-shadow: rgba(0, 0, 0, 0.3);
 	--color-overlay: rgba(0, 0, 0, 0.8);
 	--color-modal-bg: #1e293b;
+	--color-modal-warning-bg: #101a2a;
+	--color-modal-warning-border: #334155;
+	--color-modal-warning-text: #e0e7ff;
 
 	--skeleton-base: #334155;
 	--skeleton-highlight: #475569;
