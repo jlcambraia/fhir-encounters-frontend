@@ -124,10 +124,10 @@
 .details-modal__section_warning {
 	padding: 1rem;
 	margin-bottom: 0;
-	border: solid 1px #bfdbfe;
+	border: solid 1px var(--color-modal-warning-border);
 	border-radius: 0.5rem;
-	background-color: #eff6ff;
-	color: #1d4ed8;
+	background-color: var(--color-modal-warning-bg);
+	color: var(--color-modal-warning-text);
 }
 
 .details-modal__section-title {
@@ -143,7 +143,7 @@
 }
 
 .details-modal__section-title_warning {
-	color: #1d4ed8;
+	color: var(--color-modal-warning-text);
 	font-size: 1rem;
 	margin-bottom: 0.5rem;
 	border-bottom: none;
