@@ -26,3 +26,48 @@
 	align-items: center;
 	gap: 15px;
 }
+
+@media (max-width: 600px) {
+	.header {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.5rem 1rem; /* opcional para dar espaçamento lateral */
+	}
+
+	.header__logo-container {
+		gap: 0.4em;
+		justify-content: center;
+	}
+
+	.header__logo {
+		width: 2em;
+	}
+
+	.header__title {
+		font-size: 1.4rem;
+		margin-left: 0; /* tira a margem lateral quando fica centralizado */
+		text-align: center;
+	}
+
+	.header__buttons-container {
+		gap: 10px;
+		justify-content: center;
+		width: 100%;
+	}
+}
+
+/* Ajuste extra para telas muito pequenas, tipo celular */
+@media (max-width: 350px) {
+	.header__title {
+		font-size: 1.2rem;
+	}
+
+	.header__logo {
+		width: 2em;
+	}
+
+	.header__buttons-container {
+		gap: 8px;
+	}
+}
