@@ -51,3 +51,12 @@
 		background-position: 200% 0;
 	}
 }
+
+@media (max-width: 700px) {
+	.table__row_skeleton {
+		height: 3rem;
+	}
+	.table__row_skeleton .table__cell {
+		padding: 0.5rem 0.75rem;
+	}
+}
