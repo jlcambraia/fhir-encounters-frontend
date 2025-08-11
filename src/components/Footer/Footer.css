@@ -10,6 +10,7 @@
 	color: var(--color-text);
 	font-weight: var(--font-medium);
 	font-size: 0.9rem;
+	text-align: center;
 }
 
 .footer__icons {
@@ -22,4 +23,10 @@
 .footer__icon {
 	cursor: pointer;
 	width: 1.2rem;
+}
+
+@media (max-width: 500px) {
+	.footer {
+		flex-direction: column;
+	}
 }
