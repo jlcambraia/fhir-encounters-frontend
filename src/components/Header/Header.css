@@ -1,0 +1,28 @@
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.header__logo-container {
+	display: flex;
+	align-items: center;
+	gap: 0.2em;
+}
+
+.header__logo {
+	width: 2.5em;
+}
+
+.header__title {
+	color: var(--color-title);
+	font-weight: var(--font-bold);
+	font-size: 1.75rem;
+	margin-left: 0.5rem;
+}
+
+.header__buttons-container {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
