@@ -12,12 +12,20 @@
 
 .pagination__select {
 	margin-left: 0.3rem;
-	padding: 0.3rem;
-	border-radius: 4px;
+	min-width: 4rem;
+	padding: 0.4rem 1.8rem 0.4rem 0.7rem;
 	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	font-size: 0.875rem;
 	background: var(--color-white);
 	color: var(--color-text);
-	min-width: 4rem;
+	transition: border-color 0.3s ease;
+	appearance: none;
+	background-image: url(../../../../assets/icons/arrow-down-icon.png);
+	background-repeat: no-repeat;
+	background-position: right 0.7rem center;
+	background-size: 8px 8px;
+	outline: none;
 }
 
 .pagination__controls {
