@@ -1,50 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
+import useModalClose from '../../hooks/useModalClose';
 import './SaveViewModal.css';
 
 const SaveViewModal = ({ isOpen, onClose, onSave }) => {
 	const { translate } = useTranslations();
 	const [viewName, setViewName] = useState('');
+	const { handleBackdropClick } = useModalClose({ isOpen, onClose });
 
+	// useEffect que reseta o nome da visualização sempre que o modal é aberto
 	useEffect(() => {
 		if (isOpen) {
 			setViewName('');
 		}
 	}, [isOpen]);
 
-	useEffect(() => {
-		if (!isOpen) return;
-
-		const handleEsc = (e) => {
-			if (e.key === 'Escape') onClose();
-		};
-
-		document.addEventListener('keydown', handleEsc);
-		return () => document.removeEventListener('keydown', handleEsc);
-	}, [isOpen, onClose]);
-
+	// Função para fechar o modal, que também reseta o estado do nome da visualização
 	const handleClose = () => {
 		setViewName('');
 		onClose();
 	};
 
+	// Função que lida com o envio do formulário
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
 		onSave(viewName.trim());
 		handleClose();
 	};
 
-	const handleBackdropClick = (e) => {
-		if (e.target === e.currentTarget) {
-			handleClose();
-		}
-	};
-
+	// Função que atualiza o estado `viewName` conforme o usuário digita
 	const handleInputChange = (e) => {
 		setViewName(e.target.value);
 	};
 
+	// Se o modal não estiver aberto, não renderiza nada
 	if (!isOpen) return null;
 
 	return (

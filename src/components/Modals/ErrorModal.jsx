@@ -1,26 +1,12 @@
-import { useEffect } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
+import useModalClose from '../../hooks/useModalClose';
 import './ErrorModal.css';
 
 const ErrorModal = ({ error, onClose, onRetry }) => {
 	const { translate } = useTranslations();
 
-	useEffect(() => {
-		if (!error) return;
-
-		const handleEsc = (e) => {
-			if (e.key === 'Escape') onClose();
-		};
-
-		document.addEventListener('keydown', handleEsc);
-		return () => document.removeEventListener('keydown', handleEsc);
-	}, [error, onClose]);
-
-	const handleBackdropClick = (e) => {
-		if (e.target === e.currentTarget) {
-			onClose();
-		}
-	};
+	// Hook que lida com o fechamento do modal com clique no dropdown e com a tecla 'Esc'
+	const { handleBackdropClick } = useModalClose({ isOpen: error, onClose });
 
 	return (
 		<div className='error-modal' onClick={handleBackdropClick}>
@@ -36,13 +22,8 @@ const ErrorModal = ({ error, onClose, onRetry }) => {
 				>
 					×
 				</button>
-				{/* Título */}
 				<h2 className='error-modal__title'>{translate('errorTitle')}</h2>
-
-				{/* Mensagem */}
 				<p className='error-modal__message'>{translate('errorLoadingData')}</p>
-
-				{/* Ações */}
 				<div className='error-modal__actions'>
 					<button
 						className='error-modal__btn error-modal__btn_close'

@@ -1,7 +1,8 @@
 import { useContext, useEffect, useCallback } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { EncountersContext } from '../../contexts/EncountersContext';
-import { getEncounterDetails } from '../../utils/formatters'; // Importação da nova função
+import { getEncounterDetails } from '../../utils/formatters';
+import useModalClose from '../../hooks/useModalClose';
 import encounterDetailsIcon from '../../assets/icons/encounter-icon.png';
 import encounterInformationIcon from '../../assets/icons/details-icon.png';
 import patientIcon from '../../assets/icons/patient-icon.png';
@@ -11,44 +12,8 @@ import warningIcon from '../../assets/icons/warning-icon.png';
 import './DetailsModal.css';
 
 const DetailsModal = ({ selected, setSelected }) => {
-	// ============================================
-	// HOOKS E CONTEXTOS
-	// ============================================
 	const { translate, language } = useTranslations();
 	const { patients, practitioners } = useContext(EncountersContext);
-
-	// ============================================
-	// FUNÇÕES DE MANIPULAÇÃO DO MODAL
-	// ============================================
-	const handleBackdropClick = (e) => {
-		if (e.target === e.currentTarget) {
-			setSelected(null);
-		}
-	};
-
-	const handleClose = useCallback(() => {
-		setSelected(null);
-	}, [setSelected]);
-
-	useEffect(() => {
-		const handleEsc = (e) => {
-			if (e.key === 'Escape') {
-				if (document.activeElement) {
-					document.activeElement.blur();
-				}
-				handleClose();
-			}
-		};
-
-		if (selected) {
-			document.addEventListener('keydown', handleEsc);
-			return () => document.removeEventListener('keydown', handleEsc);
-		}
-	}, [selected, handleClose]);
-
-	// ============================================
-	// DADOS EXTRAÍDOS (USANDO A FUNÇÃO CENTRALIZADA)
-	// ============================================
 	const encounterDetails = getEncounterDetails(
 		selected,
 		patients,
@@ -57,11 +22,29 @@ const DetailsModal = ({ selected, setSelected }) => {
 		language
 	);
 
-	if (!encounterDetails) return null; // Trata o caso de encounter nulo
+	// Função para fechar o modal, encapsulada com useCallback para otimização
+	const handleClose = useCallback(() => {
+		setSelected(null);
+	}, [setSelected]);
 
-	// ============================================
-	// RENDERIZAÇÃO PRINCIPAL
-	// ============================================
+	// Hook que lida com o fechamento do modal com clique no dropdown e com a tecla 'Esc'
+	const { handleBackdropClick } = useModalClose({
+		isOpen: !!selected, // Passa `!!selected` como `isOpen` para controlar a visibilidade.
+		onClose: handleClose,
+	});
+
+	// Efeito que controla o overflow do body para impedir a rolagem do fundo
+	useEffect(() => {
+		if (selected) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+	}, [selected]);
+
+	// Se o `encounterDetails` for nulo, não renderiza o componente
+	if (!encounterDetails) return null;
+
 	return (
 		<div
 			className='details-modal'
@@ -73,7 +56,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 			}}
 		>
 			<div className='details-modal__content'>
-				{/* Cabeçalho */}
 				<div className='details-modal__header'>
 					<div className='details-modal__title-container'>
 						<img
@@ -98,7 +80,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 				</div>
 
 				<div className='details-modal__body'>
-					{/* Informações do Encounter */}
 					<section className='details-modal__section'>
 						<h3 className='details-modal__section-title'>
 							<img
@@ -154,7 +135,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</div>
 					</section>
 
-					{/* Informações do Paciente */}
 					<section className='details-modal__section'>
 						<h3 className='details-modal__section-title'>
 							<img
@@ -213,7 +193,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</div>
 					</section>
 
-					{/* Informações do Médico */}
 					<section className='details-modal__section'>
 						<h3 className='details-modal__section-title'>
 							<img
@@ -273,7 +252,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</div>
 					</section>
 
-					{/* Informações Adicionais */}
 					<section className='details-modal__section'>
 						<h3 className='details-modal__section-title'>
 							<img
@@ -303,7 +281,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</div>
 					</section>
 
-					{/* Warning */}
 					<section className='details-modal__section details-modal__section_warning'>
 						<h4 className='details-modal__section-title details-modal__section-title_warning'>
 							<img
@@ -319,7 +296,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 					</section>
 				</div>
 
-				{/* Rodapé */}
 				<div className='details-modal__footer'>
 					<button
 						className='details-modal__btn details-modal__btn_close'
