@@ -493,11 +493,7 @@ npm run test
 
 ### Melhorias Técnicas
 
-- **React Query:** Para cache e sincronização de dados
-- **PWA:** Transformar em Progressive Web App
-- **Storybook:** Documentação de componentes
 - **TypeScript:** Migração para tipagem estática
-- **Performance Monitoring:** Integração com Sentry ou similar
 
 ## Referências e Recursos
 
@@ -507,10 +503,6 @@ npm run test
 - [Vite Guide](https://vitejs.dev/guide/)
 - [Jest Testing Framework](https://jestjs.io/)
 - [Vercel Deployment](https://vercel.com/docs)
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Autor
 
@@ -525,4 +517,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## Agradecimentos
 
-Agradeço a oportunidade de participar deste desafio técnico! Foi uma ótima experiência desenvolver e aplicar as melhores práticas em um projeto prático. Qualquer feedback é muito bem-vindo.
+Agradeço a oportunidade de participar deste desafio técnico! Foi uma ótima experiência desenvolver e aplicar as melhores práticas em um projeto prático.
+
+Qualquer feedback é muito bem-vindo.
+
+Um grande abraço a todos!
