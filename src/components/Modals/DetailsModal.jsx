@@ -1,12 +1,7 @@
 import { useContext, useEffect, useCallback } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { EncountersContext } from '../../contexts/EncountersContext';
-import {
-	formatDate,
-	formatDateDetails,
-	formatName,
-	getStatusProps,
-} from '../../utils/formatters';
+import { getEncounterDetails } from '../../utils/formatters'; // Importação da nova função
 import encounterDetailsIcon from '../../assets/icons/encounter-icon.png';
 import encounterInformationIcon from '../../assets/icons/details-icon.png';
 import patientIcon from '../../assets/icons/patient-icon.png';
@@ -23,93 +18,10 @@ const DetailsModal = ({ selected, setSelected }) => {
 	const { patients, practitioners } = useContext(EncountersContext);
 
 	// ============================================
-	// FUNÇÃO PARA EXTRAIR DADOS DO PACIENTE
-	// ============================================
-	const getPatientData = () => {
-		const patientId = selected.subject?.reference?.split('/')[1];
-		const patient = patients[patientId];
-
-		if (!patient) {
-			return {
-				name: translate('notAvailable'),
-				id: translate('notAvailable'),
-				birthDate: translate('notAvailable'),
-				gender: translate('notAvailable'),
-				contact: translate('notAvailable'),
-				address: translate('notAvailable'),
-			};
-		}
-
-		return {
-			name: formatName(patient.name, translate),
-			id: patient.id || translate('notAvailable'),
-			birthDate: patient.birthDate
-				? formatDate(patient.birthDate, translate, language)
-				: translate('notAvailable'),
-			gender: patient.gender
-				? translate(patient.gender)
-				: translate('notAvailable'),
-
-			contact: patient.telecom?.[0]?.value || translate('notAvailable'),
-			address: patient.address?.[0]
-				? `${patient.address[0].line?.[0] || ''} ${
-						patient.address[0].city || ''
-				  }, ${patient.address[0].state || ''} ${
-						patient.address[0].postalCode || ''
-				  }`.trim()
-				: translate('notAvailable'),
-		};
-	};
-
-	// ============================================
-	// FUNÇÃO PARA EXTRAIR DADOS DO MÉDICO
-	// ============================================
-	const getPractitionerData = () => {
-		const practitionerId = selected.participant
-			?.find((p) => p.individual)
-			?.individual?.reference?.split('/')[1];
-		const practitioner = practitioners[practitionerId];
-
-		if (!practitioner) {
-			return {
-				name: translate('notAvailable'),
-				id: translate('notAvailable'),
-				specialty: translate('notAvailable'),
-				phone: translate('notAvailable'),
-				email: translate('notAvailable'),
-				department: translate('notAvailable'),
-			};
-		}
-
-		return {
-			name: formatName(practitioner.name, translate),
-			id: practitioner.id || translate('notAvailable'),
-			specialty:
-				practitioner.qualification?.[0]?.code?.text ||
-				translate('notAvailable'),
-			phone:
-				practitioner.telecom?.find((t) => t.system === 'phone')?.value ||
-				translate('notAvailable'),
-			email:
-				practitioner.telecom?.find((t) => t.system === 'email')?.value ||
-				translate('notAvailable'),
-			department:
-				practitioner.qualification?.[0]?.issuer?.display ||
-				translate('notAvailable'),
-		};
-	};
-
-	// ============================================
 	// FUNÇÕES DE MANIPULAÇÃO DO MODAL
 	// ============================================
 	const handleBackdropClick = (e) => {
 		if (e.target === e.currentTarget) {
-			setSelected(null);
-		}
-	};
-
-	const handleKeyDown = (e) => {
-		if (e.key === 'Escape') {
 			setSelected(null);
 		}
 	};
@@ -135,11 +47,17 @@ const DetailsModal = ({ selected, setSelected }) => {
 	}, [selected, handleClose]);
 
 	// ============================================
-	// DADOS EXTRAÍDOS
+	// DADOS EXTRAÍDOS (USANDO A FUNÇÃO CENTRALIZADA)
 	// ============================================
-	const patientData = getPatientData();
-	const practitionerData = getPractitionerData();
-	const statusProps = getStatusProps(selected.status, translate);
+	const encounterDetails = getEncounterDetails(
+		selected,
+		patients,
+		practitioners,
+		translate,
+		language
+	);
+
+	if (!encounterDetails) return null; // Trata o caso de encounter nulo
 
 	// ============================================
 	// RENDERIZAÇÃO PRINCIPAL
@@ -148,7 +66,11 @@ const DetailsModal = ({ selected, setSelected }) => {
 		<div
 			className='details-modal'
 			onClick={handleBackdropClick}
-			onKeyDown={handleKeyDown}
+			onKeyDown={(e) => {
+				if (e.key === 'Escape') {
+					handleClose();
+				}
+			}}
 		>
 			<div className='details-modal__content'>
 				{/* Cabeçalho */}
@@ -191,18 +113,16 @@ const DetailsModal = ({ selected, setSelected }) => {
 								<span className='details-modal__label'>
 									{translate('encounterID')}:
 								</span>
-								<span className='details-modal__value'>{selected.id}</span>
+								<span className='details-modal__value'>
+									{encounterDetails.id}
+								</span>
 							</div>
 							<div className='details-modal__info-item'>
 								<span className='details-modal__label'>
 									{translate('dateTime')}:
 								</span>
 								<span className='details-modal__value'>
-									{formatDateDetails(
-										selected.period?.start,
-										translate,
-										language
-									)}
+									{encounterDetails.formattedDateDetails}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -210,9 +130,9 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('status')}:
 								</span>
 								<span
-									className={`details-modal__status ${statusProps.className}`}
+									className={`details-modal__status ${encounterDetails.statusProps.className}`}
 								>
-									{statusProps.text}
+									{encounterDetails.statusProps.text}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -220,7 +140,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('encounterType')}:
 								</span>
 								<span className='details-modal__value'>
-									{selected.type?.[0]?.text || translate('outpatientVisit')}
+									{encounterDetails.encounterType}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -228,8 +148,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('location')}:
 								</span>
 								<span className='details-modal__value'>
-									{selected.location?.[0]?.location?.display ||
-										translate('mainBuilding')}
+									{encounterDetails.location}
 								</span>
 							</div>
 						</div>
@@ -247,14 +166,14 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</h3>
 						<div className='details-modal__patient-header'>
 							<div className='details-modal__patient-avatar'>
-								{patientData.name.charAt(0).toUpperCase()}
+								{encounterDetails.patientData.name.charAt(0).toUpperCase()}
 							</div>
 							<div className='details-modal__patient-basic'>
 								<h4 className='details-modal__patient-name'>
-									{patientData.name}
+									{encounterDetails.patientData.name}
 								</h4>
 								<p className='details-modal__patient-id'>
-									{translate('patientID')}: {patientData.id}
+									{translate('patientID')}: {encounterDetails.patientData.id}
 								</p>
 							</div>
 						</div>
@@ -264,7 +183,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('dateOfBirth')}:
 								</span>
 								<span className='details-modal__value'>
-									{patientData.birthDate}
+									{encounterDetails.patientData.birthDate}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -272,7 +191,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('gender')}:
 								</span>
 								<span className='details-modal__value'>
-									{patientData.gender}
+									{encounterDetails.patientData.gender}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -280,7 +199,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('contact')}:
 								</span>
 								<span className='details-modal__value'>
-									{patientData.contact}
+									{encounterDetails.patientData.contact}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -288,7 +207,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('address')}:
 								</span>
 								<span className='details-modal__value'>
-									{patientData.address}
+									{encounterDetails.patientData.address}
 								</span>
 							</div>
 						</div>
@@ -306,14 +225,15 @@ const DetailsModal = ({ selected, setSelected }) => {
 						</h3>
 						<div className='details-modal__practitioner-header'>
 							<div className='details-modal__practitioner-avatar'>
-								{practitionerData.name.charAt(0).toUpperCase()}
+								{encounterDetails.practitionerData.name.charAt(0).toUpperCase()}
 							</div>
 							<div className='details-modal__practitioner-basic'>
 								<h4 className='details-modal__practitioner-name'>
-									{practitionerData.name}
+									{encounterDetails.practitionerData.name}
 								</h4>
 								<p className='details-modal__practitioner-id'>
-									{translate('practitionerID')}: {practitionerData.id}
+									{translate('practitionerID')}:{' '}
+									{encounterDetails.practitionerData.id}
 								</p>
 							</div>
 						</div>
@@ -323,7 +243,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('specialty')}:
 								</span>
 								<span className='details-modal__value'>
-									{practitionerData.specialty}
+									{encounterDetails.practitionerData.specialty}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -331,7 +251,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('phone')}:
 								</span>
 								<span className='details-modal__value'>
-									{practitionerData.phone}
+									{encounterDetails.practitionerData.phone}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -339,7 +259,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('email')}:
 								</span>
 								<span className='details-modal__value'>
-									{practitionerData.email}
+									{encounterDetails.practitionerData.email}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -347,7 +267,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('department')}:
 								</span>
 								<span className='details-modal__value'>
-									{practitionerData.department}
+									{encounterDetails.practitionerData.department}
 								</span>
 							</div>
 						</div>
@@ -369,8 +289,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('reasonForVisit')}:
 								</span>
 								<span className='details-modal__value'>
-									{selected.reasonCode?.[0]?.text ||
-										translate('routineCheckup')}
+									{encounterDetails.reasonForVisit}
 								</span>
 							</div>
 							<div className='details-modal__info-item'>
@@ -378,8 +297,7 @@ const DetailsModal = ({ selected, setSelected }) => {
 									{translate('primaryDiagnosis')}:
 								</span>
 								<span className='details-modal__value'>
-									{selected.diagnosis?.[0]?.condition?.display ||
-										translate('notSpecified')}
+									{encounterDetails.primaryDiagnosis}
 								</span>
 							</div>
 						</div>
