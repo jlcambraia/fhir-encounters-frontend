@@ -20,7 +20,6 @@
 	border-radius: 4px;
 }
 
-/* Larguras específicas para cada coluna */
 .table__cell_id .skeleton__text {
 	width: 50%;
 }
@@ -33,12 +32,10 @@
 	width: 65%;
 }
 
-/* Para a coluna de data (4ª coluna) */
 .table__cell:nth-child(4) .skeleton__text {
 	width: 40%;
 }
 
-/* Para a coluna de status (5ª coluna) */
 .table__cell:nth-child(5) .skeleton__text {
 	width: 60%;
 }

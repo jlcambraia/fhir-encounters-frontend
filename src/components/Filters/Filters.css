@@ -106,22 +106,21 @@
 	background-color: #166534;
 }
 
-/* Responsividade para telas até 600px */
 @media (max-width: 600px) {
 	.filters__form {
 		flex-direction: column;
-		align-items: stretch; /* para inputs e selects ocuparem a largura disponível */
+		align-items: stretch;
 		gap: 1rem;
 	}
 
 	.filters__field {
-		width: 100%; /* campo ocupa toda largura */
+		width: 100%;
 	}
 
 	.filters__input,
 	.filters__select,
 	.filters__input_date {
-		min-width: auto; /* remover o mínimo fixo para ajustar na largura disponível */
+		min-width: auto;
 		width: 100%;
 	}
 
@@ -131,7 +130,7 @@
 
 	.filters__btn {
 		width: 100%;
-		margin-top: 0; /* para eliminar possíveis espaçamentos estranhos */
+		margin-top: 0;
 	}
 
 	.filters__btn_clear,
@@ -140,7 +139,6 @@
 	}
 }
 
-/* Ajuste extra para telas muito pequenas, até 350px */
 @media (max-width: 350px) {
 	.filters__title {
 		font-size: 1rem;
