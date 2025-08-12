@@ -4,6 +4,7 @@ import whatsappIcon from '../../assets/icons/whatsapp-icon.png';
 import './Footer.css';
 
 const Footer = () => {
+	// Função que vai sempre atualizar o ano dinamicamente
 	function getCurrentYear() {
 		const today = new Date();
 		const year = today.getFullYear();
