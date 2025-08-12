@@ -199,7 +199,7 @@ export const getEncounterDetails = (
 	if (patient) {
 		try {
 			patientName = formatName(patient.name, translate);
-		} catch (error) {
+		} catch {
 			// Em caso de erro na formatação, tenta pegar o nome de outras formas
 			patientName =
 				patient.name?.[0]?.given?.[0] ||
@@ -241,7 +241,7 @@ export const getEncounterDetails = (
 	if (practitioner) {
 		try {
 			practitionerName = formatName(practitioner.name, translate);
-		} catch (error) {
+		} catch {
 			// Em caso de erro na formatação, tenta pegar o nome de outras formas
 			practitionerName =
 				practitioner.name?.[0]?.text ||
