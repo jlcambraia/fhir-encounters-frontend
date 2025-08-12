@@ -33,15 +33,6 @@ const DetailsModal = ({ selected, setSelected }) => {
 		onClose: handleClose,
 	});
 
-	// Efeito que controla o overflow do body para impedir a rolagem do fundo
-	useEffect(() => {
-		if (selected) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
-	}, [selected]);
-
 	// Se o `encounterDetails` for nulo, não renderiza o componente
 	if (!encounterDetails) return null;
 
