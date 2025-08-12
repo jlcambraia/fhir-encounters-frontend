@@ -22,43 +22,38 @@ class Api {
 
 		// Loop para buscar múltiplas páginas, respeitando maxPages
 		while (url && pagesFetched < maxPages) {
-			try {
-				// Faz a requisição HTTP para a página atual
-				const res = await fetch(url);
-				// Trata a resposta e obtém os dados como objeto JS
-				const data = await this._handleResponse(res);
+			// Faz a requisição HTTP para a página atual
+			const res = await fetch(url);
+			// Trata a resposta e obtém os dados como objeto JS
+			const data = await this._handleResponse(res);
 
-				// Se houver entry no bundle
-				if (data.entry) {
-					// Itera sobre cada resource retornado
-					data.entry.forEach(({ resource }) => {
-						switch (resource.resourceType) {
-							// Caso seja um encontro (Encounter), adiciona no array
-							case 'Encounter':
-								encounters.push(resource);
-								break;
-							// Caso seja um paciente (Patient), guarda no mapa usando o ID como chave
-							case 'Patient':
-								patients[resource.id] = resource;
-								break;
-							// Caso seja um profissional (Practitioner), guarda no mapa usando o ID como chave
-							case 'Practitioner':
-								practitioners[resource.id] = resource;
-								break;
-						}
-					});
-				}
-
-				// Procura o link da próxima página na resposta
-				const nextLink = data.link?.find((l) => l.relation === 'next');
-				// Atualiza a URL para próxima página ou null
-				url = nextLink ? nextLink.url : null;
-				// Incrementa contador de páginas
-				pagesFetched++;
-			} catch (error) {
-				// Loga erro no console com número da página que falhou
-				throw error; // Essencial para o erro ser propagado
+			// Se houver entry no bundle
+			if (data.entry) {
+				// Itera sobre cada resource retornado
+				data.entry.forEach(({ resource }) => {
+					switch (resource.resourceType) {
+						// Caso seja um encontro (Encounter), adiciona no array
+						case 'Encounter':
+							encounters.push(resource);
+							break;
+						// Caso seja um paciente (Patient), guarda no mapa usando o ID como chave
+						case 'Patient':
+							patients[resource.id] = resource;
+							break;
+						// Caso seja um profissional (Practitioner), guarda no mapa usando o ID como chave
+						case 'Practitioner':
+							practitioners[resource.id] = resource;
+							break;
+					}
+				});
 			}
+
+			// Procura o link da próxima página na resposta
+			const nextLink = data.link?.find((l) => l.relation === 'next');
+			// Atualiza a URL para próxima página ou null
+			url = nextLink ? nextLink.url : null;
+			// Incrementa contador de páginas
+			pagesFetched++;
 		}
 		// Retorna os dados coletados
 		return { encounters, patients, practitioners };
