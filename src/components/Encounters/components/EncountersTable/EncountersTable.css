@@ -75,6 +75,16 @@
 	width: 30%;
 }
 
+.table__cell_empty {
+	text-align: center;
+	padding: 2rem 1rem;
+}
+
+.table__empty-message {
+	font-size: 1rem;
+	color: var(--color-muted);
+}
+
 .status {
 	display: inline-block;
 	padding: 0.25rem 0.6rem;
