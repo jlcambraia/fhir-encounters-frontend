@@ -45,6 +45,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Tema Claro</em>
     </td>
+    <br>
     <td>
       <img src="./docs/images/dark-theme.png" alt="Tema Escuro" width="800">
       <br>
@@ -62,6 +63,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Modal de Detalhes - Tema Claro</em>
     </td>
+    <br>
     <td>
       <img src="./docs/images/dark-theme-details.png" alt="Modal Detalhes Escuro" width="800">
       <br>
@@ -91,6 +93,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Skeleton Loading</em>
     </td>
+    <br>
     <td>
       <img src="./docs/images/loading-error.png" alt="Estado de Erro" width="800">
       <br>
