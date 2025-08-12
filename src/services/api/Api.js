@@ -57,8 +57,7 @@ class Api {
 				pagesFetched++;
 			} catch (error) {
 				// Loga erro no console com número da página que falhou
-				console.error(`Erro ao buscar página ${pagesFetched + 1}:`, error);
-				break; // Encerra o loop se ocorrer erro
+				throw error; // Essencial para o erro ser propagado
 			}
 		}
 		// Retorna os dados coletados
