@@ -72,6 +72,7 @@ export const translations = {
 		filterStartDate: 'Data Inicial',
 		filterEndDate: 'Data Final',
 		filterSavedViews: 'Views Salvas',
+		noEncountersFound: 'Nenhum encontro foi identificado.',
 		informationAvailabilityTitle: 'Disponibilidade de Informações',
 		informationAvailabilityText:
 			'Alguns campos podem exibir "Não disponível" quando a informação não estiver presente no recurso FHIR. Isso é normal e indica que os dados não foram registrados ou não estão acessíveis pela API.',
@@ -149,6 +150,7 @@ export const translations = {
 		filterStartDate: 'Start Date',
 		filterEndDate: 'End Date',
 		filterSavedViews: 'Saved Views',
+		noEncountersFound: 'No encounters were found.',
 		informationAvailabilityTitle: 'Information Availability',
 		informationAvailabilityText:
 			'Some fields may show "Not available" when information is not available in the FHIR resource. This is normal and indicates that the data was not recorded or is not accessible through the API.',
