@@ -29,7 +29,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/desktop-main-view.png" alt="Tema Claro" width="450">
+      <img src="./docs/images/desktop-main-view.png" alt="Tema Claro" width="800">
       <br>
       <em>Visão Geral da Aplicação</em>
     </td>
@@ -41,12 +41,12 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/desktop-main-view.png" alt="Tema Claro" width="450">
+      <img src="./docs/images/desktop-main-view.png" alt="Tema Claro" width="800">
       <br>
       <em>Tema Claro</em>
     </td>
     <td>
-      <img src="./docs/images/dark-theme.png" alt="Tema Escuro" width="450">
+      <img src="./docs/images/dark-theme.png" alt="Tema Escuro" width="800">
       <br>
       <em>Tema Escuro</em>
     </td>
@@ -58,12 +58,12 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/details-modal.png" alt="Modal Detalhes Claro" width="450">
+      <img src="./docs/images/details-modal.png" alt="Modal Detalhes Claro" width="800">
       <br>
       <em>Modal de Detalhes - Tema Claro</em>
     </td>
     <td>
-      <img src="./docs/images/dark-theme-details.png" alt="Modal Detalhes Escuro" width="450">
+      <img src="./docs/images/dark-theme-details.png" alt="Modal Detalhes Escuro" width="800">
       <br>
       <em>Modal de Detalhes - Tema Escuro</em>
     </td>
@@ -75,7 +75,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/save-view-modal.png" alt="Modal Detalhes Claro" width="450">
+      <img src="./docs/images/save-view-modal.png" alt="Modal Detalhes Claro" width="800">
       <br>
       <em>Modal de Salvar Visualizações</em>
     </td>
@@ -87,12 +87,12 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/skeleton-loading.png" alt="Skeleton Loading" width="450">
+      <img src="./docs/images/skeleton-loading.png" alt="Skeleton Loading" width="800">
       <br>
       <em>Skeleton Loading</em>
     </td>
     <td>
-      <img src="./docs/images/loading-error.png" alt="Estado de Erro" width="450">
+      <img src="./docs/images/loading-error.png" alt="Estado de Erro" width="800">
       <br>
       <em>Tratamento de Erro</em>
     </td>
@@ -102,7 +102,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 #### 6. Interface Mobile
 
 <div align="left">
-  <img src="./docs/images/mobile-view.png" width="150" alt="Versão Mobile">
+  <img src="./docs/images/mobile-view.png" width="200" alt="Versão Mobile">
   <br>
   <em>Layout totalmente responsivo para dispositivos móveis</em>
 </div>
