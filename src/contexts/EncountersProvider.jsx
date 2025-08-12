@@ -3,21 +3,16 @@ import { api } from '../services/api/Api';
 import { EncountersContext } from './EncountersContext';
 
 export function EncountersProvider({ children }) {
-	// ============================================
-	// ESTADOS
-	// ============================================
 	const [encounters, setEncounters] = useState([]);
 	const [patients, setPatients] = useState({});
 	const [practitioners, setPractitioners] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	// ============================================
-	// FUNÇÃO PARA BUSCAR DADOS
-	// ============================================
+	// Função para buscar novos dados na Api
 	const fetchData = async () => {
 		try {
-			setLoading(true);
+			setLoading(true); // Inicia o loading
 			setError(false); // Reset error state
 
 			const { encounters, patients, practitioners } = await api.getEncounters();
@@ -32,30 +27,21 @@ export function EncountersProvider({ children }) {
 		}
 	};
 
-	// ============================================
-	// FUNÇÃO PARA TENTAR NOVAMENTE
-	// ============================================
+	// Função para tentar novamente buscar dados na Api
 	const retryFetch = () => {
 		fetchData();
 	};
 
-	// ============================================
-	// FUNÇÃO PARA FECHAR ERRO (sem tentar novamente)
-	// ============================================
+	// Função que volta estado do erro para false
 	const clearError = () => {
 		setError(false);
 	};
 
-	// ============================================
-	// EFFECT PARA CARREGAR DADOS INICIAIS
-	// ============================================
+	// useEffect que executa o fetchData
 	useEffect(() => {
 		fetchData();
 	}, []);
 
-	// ============================================
-	// VALOR DO CONTEXTO
-	// ============================================
 	const contextValue = {
 		encounters,
 		patients,

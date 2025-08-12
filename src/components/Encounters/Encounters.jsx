@@ -13,17 +13,21 @@ const Encounters = ({ setSelected }) => {
 	const { page, rowsPerPage, filters } = useContext(FiltersContext);
 	const { encounters, patients } = useContext(EncountersContext);
 
+	// Usa useMemo para memorizar o array de encontros filtrados.
+	// Isso evita que a filtragem seja refeita a cada renderização,
+	// sendo recalculada apenas quando `encounters`, `patients` ou `filters` mudarem.
 	const filteredEncounters = useMemo(() => {
 		return encounters.filter((enc) => {
-			// ============================================
-			// FILTRO POR NOME DO PACIENTE
-			// ============================================
+			// Extrai o ID do paciente do encontro.
 			const patientId = enc.subject?.reference?.split('/')[1];
+			// Busca o objeto completo do paciente.
 			const patient = patients[patientId];
+			// Formata o nome do paciente e o converte para minúsculas para a busca.
 			const patientName = patient
 				? formatName(patient.name, translate).toLowerCase()
 				: '';
 
+			// Verifica o filtro de nome do paciente. Se o nome não incluir o texto do filtro, retorna `false`.
 			if (
 				filters.patientName &&
 				!patientName.includes(filters.patientName.toLowerCase())
@@ -31,30 +35,32 @@ const Encounters = ({ setSelected }) => {
 				return false;
 			}
 
-			// ============================================
-			// FILTRO POR DATA (COMPARANDO APENAS DATAS)
-			// ============================================
-			if (!enc.period?.start) return false; // Se não tem data, não exibir
+			// Se o encontro não tiver data, ele não deve ser exibido.
+			if (!enc.period?.start) return false;
 
-			// Pegar apenas a parte da data (YYYY-MM-DD) ignorando horário
+			// Extrai apenas a parte da data (YYYY-MM-DD) da string completa para a filtragem.
 			const encDateOnly = enc.period.start.split('T')[0];
 
-			// Filtro de data inicial (>= data inicial)
+			// Filtro de data inicial: se a data do encontro for anterior à data inicial do filtro, retorna `false`.
 			if (filters.startDate && encDateOnly < filters.startDate) {
 				return false;
 			}
 
-			// Filtro de data final (CORRIGIDO: <= data final)
+			// Filtro de data final: se a data do encontro for posterior à data final do filtro, retorna `false`.
 			if (filters.endDate && encDateOnly > filters.endDate) {
 				return false;
 			}
 
+			// Se todas as condições de filtro passarem, o encontro é incluído.
 			return true;
 		});
 	}, [encounters, patients, filters, translate]);
 
+	// Calcula o total de resultados após a filtragem.
 	const totalResults = filteredEncounters.length;
+	// Calcula o número total de páginas.
 	const totalPages = Math.ceil(totalResults / rowsPerPage);
+	// Usa o `slice` para paginar os encontros filtrados, exibindo apenas os da página atual.
 	const paginatedEncounters = filteredEncounters.slice(
 		(page - 1) * rowsPerPage,
 		page * rowsPerPage

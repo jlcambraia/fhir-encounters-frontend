@@ -1,4 +1,5 @@
 export const translations = {
+	// Traduções em Português
 	pt: {
 		title: 'Encontros Clínicos',
 		filtersAndSearch: 'Filtros e Pesquisa',
@@ -79,6 +80,7 @@ export const translations = {
 	},
 
 	en: {
+		// Traduções em Inglês
 		title: 'Clinical Encounters',
 		filtersAndSearch: 'Filters & Search',
 		searchPlaceholder: 'Search by patient name...',

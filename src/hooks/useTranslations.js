@@ -3,22 +3,15 @@ import { LanguageContext } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 
 export function useTranslations() {
-	// ============================================
-	// CONTEXTO DE LINGUAGEM
-	// ============================================
 	const { language, setLanguage } = useContext(LanguageContext);
 
-	// ============================================
-	// CONFIGURAÇÃO DE IDIOMAS DISPONÍVEIS
-	// ============================================
+	// Configuração dos idiomas disponíveis
 	const languages = [
 		{ code: 'en', label: 'English' },
 		{ code: 'pt', label: 'Português' },
 	];
 
-	// ============================================
-	// FUNÇÃO DE TRADUÇÃO
-	// ============================================
+	// Função para traduzir o texto
 	const translate = (key, ...args) => {
 		const translation = translations[language][key];
 
@@ -31,9 +24,6 @@ export function useTranslations() {
 		return translation || key;
 	};
 
-	// ============================================
-	// RETORNO DO HOOK
-	// ============================================
 	return {
 		translate,
 		language,

@@ -1,20 +1,15 @@
 import './SkeletonLoading.css';
 
 const SkeletonLoading = () => {
-	// ============================================
-	// DADOS DAS COLUNAS DA TABELA
-	// ============================================
+	// Define a estrutura das colunas para o esqueleto, com classes CSS e chaves
 	const skeletonColumns = [
 		{ className: 'table__cell_id', key: 'id' },
 		{ className: 'table__cell_patient', key: 'patient' },
 		{ className: 'table__cell_practitioner', key: 'practitioner' },
-		{ className: '', key: 'date' }, // coluna de data
-		{ className: '', key: 'status' }, // coluna de status
+		{ className: '', key: 'date' },
+		{ className: '', key: 'status' },
 	];
 
-	// ============================================
-	// RENDERIZAÇÃO
-	// ============================================
 	return (
 		<tr className='table__row table__row_skeleton'>
 			{skeletonColumns.map((column) => (

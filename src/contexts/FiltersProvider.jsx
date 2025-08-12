@@ -7,14 +7,14 @@ export function FiltersProvider({ children }) {
 		startDate: '',
 		endDate: '',
 	});
-
-	const [saveViews, setSaveViews] = useState(() => {
-		return JSON.parse(localStorage.getItem('saveViews')) || {};
-	});
-
 	const [selectedSaveView, setSelectedSaveView] = useState('');
 	const [page, setPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+
+	// Função que resgata os Save Views do localStorage
+	const [saveViews, setSaveViews] = useState(() => {
+		return JSON.parse(localStorage.getItem('saveViews')) || {};
+	});
 
 	return (
 		<FiltersContext.Provider

@@ -4,26 +4,26 @@ import { FiltersContext } from '../../../../contexts/FiltersContext';
 import './Pagination.css';
 
 const Pagination = ({ totalPages }) => {
-	// ============================================
-	// HOOKS E CONTEXTOS
-	// ============================================
 	const { translate } = useTranslations();
 	const { rowsPerPage, setRowsPerPage, page, setPage } =
 		useContext(FiltersContext);
 
-	// ============================================
-	// FUNÇÃO PARA CALCULAR PÁGINAS VISÍVEIS
-	// ============================================
+	// Função para calcular quais botões de página devem ser visíveis
 	const getVisiblePages = (currentPage, totalPages) => {
+		// Define o número máximo de botões de página a serem mostrados
 		const maxButtons = 5;
+		// Determina o botão inicial da sequência, garantindo que não seja menor que 1
 		let start = Math.max(currentPage - 2, 1);
+		// Determina o botão final da sequência.
 		let end = start + maxButtons - 1;
 
+		// Ajusta a sequência se o final ultrapassar o número total de páginas
 		if (end > totalPages) {
 			end = totalPages;
 			start = Math.max(end - maxButtons + 1, 1);
 		}
 
+		// Cria um array com os números das páginas visíveis
 		const pages = [];
 		for (let i = start; i <= end; i++) {
 			pages.push(i);
@@ -31,36 +31,43 @@ const Pagination = ({ totalPages }) => {
 		return pages;
 	};
 
-	// ============================================
-	// FUNÇÕES DE MANIPULAÇÃO DA PAGINAÇÃO
-	// ============================================
+	// Função que lida com a alteração do número de linhas por página
 	const handleRowsPerPageChange = (e) => {
+		// Atualiza o estado de linhas por página
 		setRowsPerPage(Number(e.target.value));
+		// Volta para a primeira página após a alteração
 		setPage(1);
 	};
 
+	// Função que lida com o clique no botão "Página Anterior"
 	const handlePreviousPage = () => {
+		// Atualiza o estado da página, garantindo que não seja menor que 1
 		setPage((previousPage) => Math.max(previousPage - 1, 1));
 	};
 
+	// Função que lida com o clique no botão "Próxima Página"
 	const handleNextPage = () => {
+		// Atualiza o estado da página, garantindo que não ultrapasse o número total de páginas
 		setPage((previousPage) => Math.min(previousPage + 1, totalPages));
 	};
 
+	// Função que lida com o clique em um botão de página específico
 	const handlePageClick = (pageNumber) => {
+		// Define a página atual para o número clicado
 		setPage(pageNumber);
 	};
 
-	// ============================================
-	// FUNÇÃO PARA RENDERIZAR BOTÕES DE PÁGINAS
-	// ============================================
+	// Função para renderizar os botões de página dinamicamente
 	const renderPageButtons = () => {
+		// Obtém o array de páginas visíveis e mapeia cada uma para um botão
 		return getVisiblePages(page, totalPages).map((pageNumber) => (
 			<button
 				key={pageNumber}
+				// Aplica a classe `active` se for a página atual
 				className={`pagination__btn ${
 					page === pageNumber ? 'pagination__btn_active' : ''
 				}`}
+				// Atributo ARIA para acessibilidade, indicando a página atual
 				aria-current={page === pageNumber ? 'page' : undefined}
 				onClick={() => handlePageClick(pageNumber)}
 			>
@@ -69,12 +76,8 @@ const Pagination = ({ totalPages }) => {
 		));
 	};
 
-	// ============================================
-	// RENDERIZAÇÃO PRINCIPAL
-	// ============================================
 	return (
 		<div className='pagination'>
-			{/* Seletor de Linhas por Página */}
 			<label>
 				{translate('rowsPerPage')}:
 				<select
@@ -88,9 +91,7 @@ const Pagination = ({ totalPages }) => {
 				</select>
 			</label>
 
-			{/* Controles de Paginação */}
 			<div className='pagination__controls'>
-				{/* Botão Página Anterior */}
 				<button
 					className='pagination__btn'
 					aria-label={translate('previousPage')}
@@ -100,10 +101,8 @@ const Pagination = ({ totalPages }) => {
 					‹
 				</button>
 
-				{/* Botões das Páginas */}
 				{renderPageButtons()}
 
-				{/* Botão Próxima Página */}
 				<button
 					className='pagination__btn'
 					aria-label={translate('nextPage')}

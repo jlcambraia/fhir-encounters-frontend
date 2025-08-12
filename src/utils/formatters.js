@@ -1,31 +1,32 @@
-// ============================================
-// FORMATTERS UTILITIES
-// ============================================
-
-// ============================================
-// FORMATAÇÃO DE NOMES
-// ============================================
+// Função para formatação do Nome
+// Formata um array de nomes (FHIR) em uma string simples "Nome Sobrenome"
 export function formatName(nameArray, translate) {
+	// Se o array de nomes estiver vazio ou nulo, retorna "Nome não disponível"
 	if (!nameArray || !nameArray.length) {
 		return translate('nameNotAvailable');
 	}
 
+	// Desestrutura o primeiro nome e sobrenome do primeiro item do array
 	const { given = [], family = '' } = nameArray[0];
+	// Combina os nomes com um espaço e remove espaços extras no início/fim
 	return `${given.join(' ')} ${family}`.trim();
 }
 
-// ============================================
-// FORMATAÇÃO DE DATAS
-// ============================================
+// Função para formatação da Data que mostra na tabela
+// Formata uma string de data ISO em um formato de data localizado (DD/MM/AAAA)
 export function formatDate(dateStr, translate, language) {
+	// Se a string de data for nula, retorna "não disponível"
 	if (!dateStr) return translate('notAvailable');
 
+	// Cria um objeto Date.
 	const date = new Date(dateStr);
+	// Se a data for inválida, retorna "não disponível"
 	if (isNaN(date)) return translate('notAvailable');
 
 	let locale;
 	let options;
 
+	// Define o formato para o idioma português
 	if (language === 'pt') {
 		locale = 'pt-BR';
 		options = {
@@ -35,6 +36,7 @@ export function formatDate(dateStr, translate, language) {
 		};
 	}
 
+	// Define o formato para o idioma inglês
 	if (language === 'en') {
 		locale = 'en';
 		options = {
@@ -44,18 +46,25 @@ export function formatDate(dateStr, translate, language) {
 		};
 	}
 
+	// Retorna a data formatada
 	return date.toLocaleString(locale, options);
 }
 
+// Função para formatação da Data que mostra no modal Details
+// Formata uma string de data ISO em um formato de data e hora localizado
 export function formatDateDetails(dateStr, translate, language) {
+	// Se a string de data for nula, retorna "não disponível"
 	if (!dateStr) return translate('notAvailable');
 
+	// Cria um objeto Date
 	const date = new Date(dateStr);
+	// Se a data for inválida, retorna "não disponível"
 	if (isNaN(date)) return translate('notAvailable');
 
 	let locale;
 	let options;
 
+	// Define o formato para o idioma português (pt-BR), incluindo hora e minuto
 	if (language === 'pt') {
 		locale = 'pt-BR';
 		options = {
@@ -64,10 +73,11 @@ export function formatDateDetails(dateStr, translate, language) {
 			day: '2-digit',
 			hour: '2-digit',
 			minute: '2-digit',
-			hour12: false,
+			hour12: false, // Usa o formato de 24 horas
 		};
 	}
 
+	// Define o formato para o idioma inglês (en), incluindo hora e minuto
 	if (language === 'en') {
 		locale = 'en';
 		options = {
@@ -76,17 +86,18 @@ export function formatDateDetails(dateStr, translate, language) {
 			day: '2-digit',
 			hour: '2-digit',
 			minute: '2-digit',
-			hour12: false,
+			hour12: false, // Usa o formato de 24 horas
 		};
 	}
 
+	// Retorna a data e hora formatadas
 	return date.toLocaleString(locale, options);
 }
 
-// ============================================
-// FORMATAÇÃO DE STATUS
-// ============================================
+// Função para formatação do Status
+// Retorna as propriedades (classe CSS e texto) para um determinado status
 export function getStatusProps(status, translate) {
+	// Se o status for nulo, retorna propriedades padrão para "desconhecido"
 	if (!status) {
 		return {
 			className: 'status status--unknown',
@@ -95,20 +106,22 @@ export function getStatusProps(status, translate) {
 	}
 
 	const statusLower = status.toLowerCase();
+	// Obtém a classe CSS a partir da função auxiliar
 	const className = getStatusClassName(statusLower);
 
 	return {
 		className,
-		text: translate(statusLower), // Busca a tradução direto do translations.js
+		// Busca a tradução do status
+		text: translate(statusLower),
 	};
 }
 
-// ============================================
-// FUNÇÃO AUXILIAR PARA CLASSES DE STATUS
-// ============================================
+// Função auxiliar para classes de status
+// Mapeia um status para a classe CSS correspondente
 function getStatusClassName(statusLower) {
 	const baseClass = 'status ';
 
+	// Retorna a classe específica com base no status
 	switch (statusLower) {
 		case 'finished':
 			return baseClass + 'status--finished';
@@ -121,9 +134,7 @@ function getStatusClassName(statusLower) {
 	}
 }
 
-// ============================================
-// FUNÇÃO PARA EXTRAIR E FORMATAR DADOS DO ENCOUNTER
-// ============================================
+// Extrai e formata todos os detalhes relevantes de um objeto de encontro FHIR
 export const getEncounterDetails = (
 	encounter,
 	patients,
@@ -131,13 +142,16 @@ export const getEncounterDetails = (
 	translate,
 	language
 ) => {
+	// Se o objeto do encontro for nulo, retorna nulo
 	if (!encounter) return null;
 
 	// Extração do Patient ID
+	// Obtém o ID do paciente a partir da referência
 	const patientId = encounter.subject?.reference?.split('/')[1];
 
 	// Extração robusta do Practitioner ID
 	let practitionerId = null;
+	// Tenta extrair o ID do profissional de saúde de diferentes caminhos possíveis no objeto
 	if (encounter.participant?.length > 0) {
 		const participantWithPractitioner = encounter.participant.find((p) =>
 			p.individual?.reference?.includes('Practitioner/')
@@ -166,10 +180,12 @@ export const getEncounterDetails = (
 	}
 
 	// Busca dos recursos
+	// Usa os IDs para encontrar os objetos completos de paciente e profissional
 	const patient = patients[patientId];
 	const practitioner = practitionerId ? practitioners[practitionerId] : null;
 
 	// Dados do paciente
+	// Inicializa os dados do paciente com valores padrão de "não disponível"
 	let patientName = translate('notAvailable');
 	let patientData = {
 		name: translate('notAvailable'),
@@ -179,10 +195,12 @@ export const getEncounterDetails = (
 		contact: translate('notAvailable'),
 		address: translate('notAvailable'),
 	};
+	// Preenche os dados do paciente se o objeto for encontrado
 	if (patient) {
 		try {
 			patientName = formatName(patient.name, translate);
 		} catch (error) {
+			// Em caso de erro na formatação, tenta pegar o nome de outras formas
 			patientName =
 				patient.name?.[0]?.given?.[0] ||
 				patient.name?.[0]?.family ||
@@ -209,6 +227,7 @@ export const getEncounterDetails = (
 	}
 
 	// Dados do médico
+	// Inicializa os dados do médico com valores padrão de "não disponível"
 	let practitionerName = translate('notAvailable');
 	let practitionerData = {
 		name: translate('notAvailable'),
@@ -218,10 +237,12 @@ export const getEncounterDetails = (
 		email: translate('notAvailable'),
 		department: translate('notAvailable'),
 	};
+	// Preenche os dados do profissional se o objeto for encontrado
 	if (practitioner) {
 		try {
 			practitionerName = formatName(practitioner.name, translate);
 		} catch (error) {
+			// Em caso de erro na formatação, tenta pegar o nome de outras formas
 			practitionerName =
 				practitioner.name?.[0]?.text ||
 				practitioner.name?.[0]?.given?.[0] ||
@@ -247,6 +268,7 @@ export const getEncounterDetails = (
 	}
 
 	// Dados do Encounter
+	// Formata os dados restantes do encontro usando as funções auxiliares criadas acima
 	const formattedDate = formatDate(
 		encounter.period?.start,
 		translate,

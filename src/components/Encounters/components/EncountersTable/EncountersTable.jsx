@@ -3,21 +3,17 @@ import SkeletonLoading from './components/SkeletonLoading';
 import { useTranslations } from '../../../../hooks/useTranslations';
 import { EncountersContext } from '../../../../contexts/EncountersContext';
 import { FiltersContext } from '../../../../contexts/FiltersContext';
-import { getEncounterDetails } from '../../../../utils/formatters'; // Importação da nova função
+import { getEncounterDetails } from '../../../../utils/formatters';
 import './EncountersTable.css';
 
 const EncountersTable = ({ paginatedEncounters, setSelected }) => {
-	// ============================================
-	// HOOKS E CONTEXTOS
-	// ============================================
 	const { translate, language } = useTranslations();
 	const { patients, practitioners, loading } = useContext(EncountersContext);
 	const { rowsPerPage } = useContext(FiltersContext);
 
-	// ============================================
-	// FUNÇÃO PARA RENDERIZAR LINHA DA TABELA
-	// ============================================
+	// Função para renderizar uma única linha da tabela
 	const renderEncounterRow = (enc) => {
+		// Usa a função auxiliar para extrair e formatar todos os dados necessários para a linha
 		const encounterData = getEncounterDetails(
 			enc,
 			patients,
@@ -65,9 +61,7 @@ const EncountersTable = ({ paginatedEncounters, setSelected }) => {
 		);
 	};
 
-	// ============================================
-	// FUNÇÃO PARA RENDERIZAR ESTADO VAZIO
-	// ============================================
+	// Função para renderizar o estado de tabela vazia
 	const renderEmptyState = () => {
 		return (
 			<tr>
@@ -80,9 +74,6 @@ const EncountersTable = ({ paginatedEncounters, setSelected }) => {
 		);
 	};
 
-	// ============================================
-	// RENDERIZAÇÃO PRINCIPAL
-	// ============================================
 	return (
 		<div className='table-container'>
 			<table className='table'>
