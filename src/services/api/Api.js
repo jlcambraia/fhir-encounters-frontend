@@ -9,6 +9,24 @@ class Api {
 		return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 	}
 
+	// Método privado para fazer requisição individual de um resource
+	async _fetchResource(resourceType, id) {
+		try {
+			const baseApiUrl = this._baseUrl.split('/Encounter')[0]; // Remove a parte específica do endpoint
+			const url = `${baseApiUrl}/${resourceType}/${id}`;
+			const res = await fetch(url);
+			return await this._handleResponse(res);
+		} catch {
+			return null;
+		}
+	}
+
+	// Extrai o ID de uma referência FHIR (ex: "Patient/123" -> "123")
+	_extractIdFromReference(reference) {
+		if (!reference) return null;
+		return reference.split('/').pop();
+	}
+
 	// Busca lista de encounters + pacientes + profissionais
 	async getEncounters({ maxPages = 10, count = 100 } = {}) {
 		let url = `${this._baseUrl}&_count=${count}`;
@@ -16,7 +34,7 @@ class Api {
 		const encounters = [];
 		// Criando um objeto, porque um paciente pode aparecer em vários encontros, e desta forma não duplicamos em um array
 		const patients = {};
-		// Criando um objeto, porque um paciente pode aparecer em vários encontros, e desta forma não duplicamos em um array
+		// Criando um objeto, porque um profissional pode aparecer em vários encontros, e desta forma não duplicamos em um array
 		const practitioners = {};
 		let pagesFetched = 0;
 
@@ -55,8 +73,64 @@ class Api {
 			// Incrementa contador de páginas
 			pagesFetched++;
 		}
+
+		// Agora fazemos as requisições extras para buscar dados completos dos pacientes e profissionais
+		await this._fetchMissingResources(encounters, patients, practitioners);
+
 		// Retorna os dados coletados
 		return { encounters, patients, practitioners };
+	}
+
+	// Método privado para buscar resources que não vieram no _include
+	async _fetchMissingResources(encounters, patients, practitioners) {
+		const patientIds = new Set();
+		const practitionerIds = new Set();
+
+		// Coleta todos os IDs de pacientes e profissionais referenciados nos encounters
+		encounters.forEach((encounter) => {
+			// Extrai ID do paciente da referência
+			if (encounter.subject?.reference) {
+				const patientId = this._extractIdFromReference(
+					encounter.subject.reference
+				);
+				if (patientId && !patients[patientId]) {
+					patientIds.add(patientId);
+				}
+			}
+
+			// Extrai IDs dos profissionais/participantes
+			if (encounter.participant) {
+				encounter.participant.forEach((participant) => {
+					if (participant.individual?.reference) {
+						const practitionerId = this._extractIdFromReference(
+							participant.individual.reference
+						);
+						if (practitionerId && !practitioners[practitionerId]) {
+							practitionerIds.add(practitionerId);
+						}
+					}
+				});
+			}
+		});
+
+		// Faz requisições paralelas para buscar pacientes em falta
+		const patientPromises = Array.from(patientIds).map(async (id) => {
+			const patient = await this._fetchResource('Patient', id);
+			if (patient) {
+				patients[id] = patient;
+			}
+		});
+
+		// Faz requisições paralelas para buscar profissionais em falta
+		const practitionerPromises = Array.from(practitionerIds).map(async (id) => {
+			const practitioner = await this._fetchResource('Practitioner', id);
+			if (practitioner) {
+				practitioners[id] = practitioner;
+			}
+		});
+
+		// Aguarda todas as requisições extras terminarem
+		await Promise.all([...patientPromises, ...practitionerPromises]);
 	}
 }
 
