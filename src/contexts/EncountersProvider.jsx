@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { mockApiData } from '../utils/fhirMock';
 import { api } from '../services/api/Api';
 import { EncountersContext } from './EncountersContext';
 
@@ -21,19 +20,12 @@ export function EncountersProvider({ children }) {
 			setLoading(true);
 			setError(false); // Reset error state
 
-			// Descomente aqui quando usar API real
-			// const { encounters, patients, practitioners } = await api.getEncounters();
-			// setEncounters(encounters);
-			// setPatients(patients);
-			// setPractitioners(practitioners);
-
-			// Simulando delay para testar loading (remover depois)
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-
-			setEncounters(mockApiData.encounters);
-			setPatients(mockApiData.patients);
-			setPractitioners(mockApiData.practitioners);
+			const { encounters, patients, practitioners } = await api.getEncounters();
+			setEncounters(encounters);
+			setPatients(patients);
+			setPractitioners(practitioners);
 		} catch {
+			// Este catch agora será ativado com o erro lançado pela API
 			setError(true);
 		} finally {
 			setLoading(false);
