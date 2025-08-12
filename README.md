@@ -18,7 +18,7 @@ Este projeto foi desenvolvido como parte de um desafio técnico, demonstrando co
 
 A aplicação está hospedada no Vercel com deploy automático a cada push na branch main.
 
-**[Acessar aplicação em produção](https://colocar-link-aqui)**
+**[Acessar aplicação em produção](https://fhir-encounters-frontend.vercel.app/)**
 
 ## Demonstração
 
@@ -321,6 +321,17 @@ yarn dev
 5. **Acesse a aplicação:**
    Abra seu navegador e acesse `http://localhost:3000`
 
+## Testes Unitários
+
+Implementação de testes unitários focando nas funções críticas da aplicação, especialmente no componente `formatter.js` para garantir a confiabilidade das funções de formatação de dados.
+
+### Executar Testes
+
+```bash
+# Executar todos os testes
+npm run test
+```
+
 ## Stack Tecnológica
 
 ### Frontend Core
@@ -462,24 +473,6 @@ src/
 | `npm run preview` | Preview do build de produção       |
 | `npm run test`    | Executa testes unitários           |
 | `npm run lint`    | Verifica código com ESLint         |
-
-### Deploy Local para Produção
-
-```bash
-npm run build
-npm run preview
-```
-
-## Testes Unitários
-
-Implementação de testes unitários focando nas funções críticas da aplicação, especialmente no componente `formatter.js` para garantir a confiabilidade das funções de formatação de dados.
-
-### Executar Testes
-
-```bash
-# Executar todos os testes
-npm run test
-```
 
 ## Melhorias Futuras
 
