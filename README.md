@@ -29,7 +29,7 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 <table>
   <tr>
     <td>
-      <img src="./docs/images/desktop-main-view.png" alt="Tema Claro" width="800">
+      <img src="./docs/images/desktop-main-view.png" alt="Visão Geral da Página" width="800">
       <br>
       <em>Visão Geral da Aplicação</em>
     </td>
@@ -38,6 +38,8 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 
 #### 2. Sistema de Temas
 
+##### Tema Claro
+
 <table>
   <tr>
     <td>
@@ -45,7 +47,13 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Tema Claro</em>
     </td>
-    <br>
+  </tr>
+</table>
+
+##### Tema Escuro
+
+<table>
+  <tr>
     <td>
       <img src="./docs/images/dark-theme.png" alt="Tema Escuro" width="800">
       <br>
@@ -56,6 +64,8 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 
 #### 3. Modais e Detalhes
 
+##### Tema Claro
+
 <table>
   <tr>
     <td>
@@ -63,7 +73,13 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Modal de Detalhes - Tema Claro</em>
     </td>
-    <br>
+  </tr>
+</table>
+
+##### Tema Escuro
+
+<table>
+  <tr>
     <td>
       <img src="./docs/images/dark-theme-details.png" alt="Modal Detalhes Escuro" width="800">
       <br>
@@ -86,6 +102,8 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 
 #### 5. Estados de Loading e Erro
 
+##### Skeleton Loading
+
 <table>
   <tr>
     <td>
@@ -93,7 +111,13 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
       <br>
       <em>Skeleton Loading</em>
     </td>
-    <br>
+  </tr>
+</table>
+
+##### Tratamento de Erro
+
+<table>
+  <tr>
     <td>
       <img src="./docs/images/loading-error.png" alt="Estado de Erro" width="800">
       <br>
