@@ -101,8 +101,8 @@ A aplicação está hospedada no Vercel com deploy automático a cada push na br
 
 #### 6. Interface Mobile
 
-<div align="center">
-  <img src="./docs/images/mobile-view.png" width="300" alt="Versão Mobile">
+<div align="left">
+  <img src="./docs/images/mobile-view.png" width="150" alt="Versão Mobile">
   <br>
   <em>Layout totalmente responsivo para dispositivos móveis</em>
 </div>
