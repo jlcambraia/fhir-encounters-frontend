@@ -119,6 +119,7 @@ export function useFilters() {
 			...prev,
 			[e.target.name]: e.target.value,
 		}));
+		setPage(1); // reseta a página ao mudar filtro
 	};
 
 	// Função para lidar com inputs de data customizados
@@ -150,6 +151,8 @@ export function useFilters() {
 			...prev,
 			[name]: isoDate,
 		}));
+
+		setPage(1);
 	};
 
 	// Função para limpar o filtro
