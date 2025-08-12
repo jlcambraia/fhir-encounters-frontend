@@ -1,4 +1,4 @@
-import { useContext, useEffect, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { EncountersContext } from '../../contexts/EncountersContext';
 import { getEncounterDetails } from '../../utils/formatters';
