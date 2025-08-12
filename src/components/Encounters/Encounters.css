@@ -3,7 +3,6 @@
 	border-radius: 6px;
 	padding: 1rem 1.5rem;
 	box-shadow: 0 2px 4px var(--color-shadow);
-	min-height: 53.125rem;
 	display: flex;
 	flex-direction: column;
 }
@@ -39,7 +38,6 @@
 
 @media (max-width: 700px) {
 	.encounters {
-		min-height: auto; /* deixa crescer conforme conteúdo */
 		padding: 1rem;
 	}
 }
