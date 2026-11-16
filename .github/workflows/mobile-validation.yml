@@ -1,0 +1,24 @@
+name: Validate mobile filter changes
+
+on:
+  push:
+    branches: [fix/mobile-filter-date-width]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npm run lint
+      - run: npm test -- --runInBand
